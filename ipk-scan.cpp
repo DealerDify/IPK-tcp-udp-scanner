@@ -157,7 +157,8 @@ std::vector<int> get_port_numbers_from_string(std::string given_ports)
 	}
 	else
 	{
-		fprintf(stderr, "Invalid upd ports argument\n");
+		fprintf(stderr, "Invalid ports argument\n");
+		exit(-1);
 	}
 	return ports_to_scan;
 }
@@ -382,12 +383,24 @@ int main(int argc, char **argv)
 		}
 	}
 
-	
-	std::vector<int> udp_ports_to_scan = get_port_numbers_from_string(given_ports_udp);
-	std::vector<int> tcp_ports_to_scan = get_port_numbers_from_string(given_ports_tcp);
-
-	fprintf(stdout, "ports_scan_udp: %s\n", given_ports_udp.c_str());
-	fprintf(stdout, "ports_scan_tcp: %s\n", given_ports_tcp.c_str());
+	if (!(got_pt || got_pu))
+	{
+		fprintf(stderr, "Alespon jeden z -pu nebo -pt je povinny\n");
+		exit(-1);
+	}
+	std::vector<int> udp_ports_to_scan;
+	std::vector<int> tcp_ports_to_scan;
+	if(got_pu)
+	{
+		udp_ports_to_scan = get_port_numbers_from_string(given_ports_udp);
+		fprintf(stdout, "ports_scan_udp: %s\n", given_ports_udp.c_str());
+	}
+	if(got_pt)
+	{
+		tcp_ports_to_scan = get_port_numbers_from_string(given_ports_tcp);
+		fprintf(stdout, "ports_scan_tcp: %s\n", given_ports_tcp.c_str());
+	}
+		
 
 /*--------------------------------------------------------------------------------
  *Z manualovyh stranek getaddrinfo
