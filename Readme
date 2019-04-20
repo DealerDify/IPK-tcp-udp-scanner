@@ -1,0 +1,41 @@
+TCP/UDP scanner (ipk-scan)
+
+Spuštění:
+./ipk-scan -pu ports -pt ports {-i interface} [ip | domain name]
+
+Je potřeba spuštět se sudo oprávněním jinak program nemá oprávnění vytvářet RAW packety.
+U všech přepínačů nezáleží na pořadí.
+
+ports:
+	možno zapsat jako x,y,z... nebo jako x-y nebo také jen jako jeden port x kde:
+	1. varianta vypíše dané porty
+	2. varianta vypíše porty z rozsahu <x,y>
+	3. varianta vypíše pouze 1 zadaný port
+interface:	
+	možnost specifikovat jméno interface, tato volba je nepovinná
+	při nezadání je vybrán první neloopbackový aktivní interface
+ip|domain name:
+	cíl pro skenování portů
+-pt | -pu:
+	alespoň jeden z přepínačů je povinný
+
+Příklad spuštění a výstupu:
+Spuštění:
+	sudo ./ipk-scan -pt 20-21 -pu 30,40,50 localhost -i lo
+Výstup:
+	ports_scan_udp: 30,40,50
+	ports_scan_tcp: 20-21
+	Domain/ip with ipv4: localhost resolved: 127.0.0.1
+	Interface name: lo
+	TCP port:20 Closed
+	TCP port:21 Closed
+	UDP port:30 Closed
+	UDP port:40 Closed
+	UDP port:50 Closed
+
+Návratová hodnota:
+	0 při úspěšném ukončení programu
+	-1 při chybě s upřesňující chybovou hláškou na standartní chybový výstup
+
+Podrobnější informace o funkcionalitě programu v dokumentaci manual.pdf
+
