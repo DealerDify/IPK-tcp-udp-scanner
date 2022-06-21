@@ -1,2 +1,2 @@
-# IPK-proj2
-IPK-projekt2-tcp/udp scanner
+# IPK-projekt
+FIT VUT IPK projekt2-tcp/udp scanner
